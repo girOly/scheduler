@@ -22,6 +22,12 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  console.log("========== prpos in APOINTMENT ========");
+  console.log(props);
+  console.log("==============================");
+
+  console.log(props.interview, " <<<<<<< Props.interview in Index.js");
   const onSave = function() {
     transition(SAVING);
   };
@@ -51,6 +57,15 @@ export default function Appointment(props) {
   const onDelete = function() {
     transition(CONFIRM);
   };
+  const save = function(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    };
+    transition(SAVING);
+    console.log(props.id, "ID____________________");
+    props.bookInterview(props.id, interview).then(() => transition(SHOW));
+  };
 
   return (
     <article className="appointment">
@@ -63,7 +78,7 @@ export default function Appointment(props) {
           name={props.interview.student}
           // interviewers={[]}
           interviewers={props.interviewers}
-          onSave={onSave}
+          onSave={save}
           onCancel={onCancel}
           // onBook={props.bookInterview().then(() => transition(SHOW))}
         />
@@ -77,7 +92,7 @@ export default function Appointment(props) {
       {mode === SHOW && (
         <Show
           student={props.interview && props.interview.student}
-          interviewer={props.interview && props.interview.interviewer}
+          interviewer={props.interview.interviewer}
           onEdit={onEdit}
           onDelete={onDelete}
         />
@@ -86,7 +101,7 @@ export default function Appointment(props) {
         <Form
           // interviewers={props.interviewers}
           interviewers={props.interviewers}
-          onSave={onSave}
+          onSave={save}
           onCancel={onCancel}
         />
       )}

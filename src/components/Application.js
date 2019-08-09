@@ -8,113 +8,6 @@ import {
   getAppointmentsForDay,
   getInterviewersForDay
 } from "helpers/selectors";
-//
-// const appointments = [
-//   {
-//     id: 1,
-//     time: "12pm"
-//   },
-//   {
-//     id: 2,
-//     time: "1pm",
-//     interview: {
-//       student: "Lydia Miller-Jones",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png"
-//       }
-//     }
-//   },
-//   {
-//     id: 3,
-//     time: "3pm",
-//     interview: {
-//       student: "Frodo Baggins",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png"
-//       }
-//     }
-//   },
-//   {
-//     id: 4,
-//     time: "5pm",
-//     interview: {
-//       student: "Bilbo Baggins",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png"
-//       }
-//     }
-//   },
-//   {
-//     id: 5,
-//     time: "8pm",
-//     interview: {
-//       student: "Samwise Gamgee",
-//       interviewer: {
-//         id: 1,
-//         name: "Sylvia Palmer",
-//         avatar: "https://i.imgur.com/LpaY82x.png"
-//       }
-//     }
-//   },
-//   {
-//     id: 0,
-//     time: "",
-//     interview: {
-//       student: "",
-//       interviewer: {
-//         id: 0,
-//         name: "",
-//         avatar: ""
-//       }
-//     }
-//   }
-// ];
-// // const interviewers = {
-//   "1": {
-//     id: 1,
-//     name: "Sylvia Palmer",
-//     avatar: "https://i.imgur.com/LpaY82x.png"
-//   },
-//   "2": {
-//     id: 2,
-//     name: "Tori Malcolm",
-//     avatar: "https://i.imgur.com/Nmx0Qxo.png"
-//   },
-//   "3": {
-//     id: 3,
-//     name: "Mildred Nazir",
-//     avatar: "https://i.imgur.com/T2WwVfS.png"
-//   },
-//   "4": { id: 4, name: "Cohana Roy", avatar: "https://i.imgur.com/FK8V841.jpg" },
-//   "5": { id: 5, name: "Sven Jones", avatar: "https://i.imgur.com/twYrpay.jpg" },
-//   "6": {
-//     id: 6,
-//     name: "Susan Reynolds",
-//     avatar: "https://i.imgur.com/TdOAdde.jpg"
-//   },
-//   "7": { id: 7, name: "Alec Quon", avatar: "https://i.imgur.com/3tVgsra.jpg" },
-//   "8": {
-//     id: 8,
-//     name: "Viktor Jain",
-//     avatar: "https://i.imgur.com/iHq8K8Z.jpg"
-//   },
-//   "9": {
-//     id: 9,
-//     name: "Lindsay Chu",
-//     avatar: "https://i.imgur.com/nPywAp1.jpg"
-//   },
-//   "10": {
-//     id: 10,
-//     name: "Samantha Stanic",
-//     avatar: "https://i.imgur.com/okB9WKC.jpg"
-//   }
-// };
 
 export default function Application(props) {
   // const [days, setDays] = useState();
@@ -124,7 +17,6 @@ export default function Application(props) {
     appointments: {},
     interviewers: {}
   });
-  const [chicken, setChicken] = useState("bob");
   const setDay = day => setState({ ...state, day });
   const setDays = days => setState({ ...state, days });
   const setInterviewers = interviewers => setState({ ...state, interviewers });
@@ -145,17 +37,17 @@ export default function Application(props) {
 
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
-  console.log("from app.js", interviewers);
 
   const schedule = appointments.map(appointment => {
-    const interview = getInterview(state, appointment.interview);
-    console.log(interview, "Cest lui");
+    const interviewCurrent = getInterview(state, appointment.interview);
+
+    console.log(interviewCurrent, "===============getInterview=============");
     return (
       <Appointment
         key={appointment.id}
         id={appointment.id}
         time={appointment.time}
-        interview={interview}
+        interview={interviewCurrent}
         interviewers={interviewers}
       />
     );
@@ -163,14 +55,9 @@ export default function Application(props) {
   // ______________________________
   // Pass SetDays(data)? -- Update Appointment Object using Helper Function?
 
-  const save = function(name, interviewer) {
-    const interview = {
-      student: name,
-      interviewer
-    };
-  };
-
   const bookInterview = function(id, interview) {
+    console.log(interview, "Interview! ___________________");
+    console.log("Booking Interview - Application.js");
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -180,15 +67,20 @@ export default function Application(props) {
       [id]: appointment
     };
 
+    console.log("Before exiting Function", id);
     return axios
-      .put(`http://localhost:3001/api/appointments/${id}`, appointment)
+      .put(`/api/appointments/${id}`, { interview })
       .then(() => {
+        console.log("Juste avant le Set State");
         setState(state => ({
           ...state,
           appointments
         }));
+      })
+      .catch(err => {
+        console.log(err);
       });
-    // transition to SHOW usig onBook
+    // transition to SHOW using onBook
   };
 
   return (
@@ -210,9 +102,11 @@ export default function Application(props) {
             time={appointment.time}
             interview={appointment.interview}
             interviewers={interviewers}
+            bookInterview={bookInterview}
           />
           // <Appointment key={appointment.id} {...appointment} />
         ))}
+        <Appointment />
       </section>
     </main>
   );

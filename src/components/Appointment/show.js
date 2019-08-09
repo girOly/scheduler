@@ -3,13 +3,16 @@ import React from "react";
 import "./styles.scss";
 
 export default function Show(props) {
+  console.log(props.interviewer, "SHOW COMPONENT ------ INTERVIEWER");
   return (
     <main class="appointment__card appointment__card--show">
       <section class="appointment__card-left">
         <h2 class="text--regular">{props.student}</h2>
         <section class="interviewer">
           <h4 class="text--light">Interviewer</h4>
-          <h3 class="text--regular">{props.interviewer && props.interviewer.name}</h3>
+          <h3 class="text--regular">
+            {props.interviewer && props.interviewer.name}
+          </h3>
         </section>
       </section>
       <section class="appointment__card-right">
