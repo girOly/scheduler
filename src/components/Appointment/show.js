@@ -9,7 +9,7 @@ export default function Show(props) {
         <h2 class="text--regular">{props.student}</h2>
         <section class="interviewer">
           <h4 class="text--light">Interviewer</h4>
-          <h3 class="text--regular">{props.interviewer.name}</h3>
+          <h3 class="text--regular">{props.interviewer && props.interviewer.name}</h3>
         </section>
       </section>
       <section class="appointment__card-right">

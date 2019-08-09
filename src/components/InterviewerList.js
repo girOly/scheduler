@@ -17,7 +17,7 @@ export default function InterviewerList(props) {
 
   return (
     <section class="interviewers">
-      <h4 class="interviewers__header text--light">Interviewer</h4>
+      <h4 class="interviewers__header text--light">{props.name}</h4>
       <ul class="interviewers__list"> {interviewerList} </ul>
     </section>
   );

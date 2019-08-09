@@ -1,25 +1,94 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 import "./styles.scss";
+import useVisualMode from "hooks/useVisualMode";
 import Empty from "components/Appointment/empty";
 import Show from "components/Appointment/show";
+import Confirm from "components/Appointment/confirm";
+import Error from "components/Appointment/error";
+import Header from "components/Appointment/header";
+import Status from "components/Appointment/status";
+import Form from "components/Appointment/form";
+
 export default function Appointment(props) {
+  const EMPTY = "EMPTY";
+  const SAVING = "SAVING";
+  const DELETING = "DELETING";
+  const SHOW = "SHOW";
+  const CONFIRM = "CONFIRM";
+  const CREATE = "CREATE";
+  const EDIT = "EDIT";
+  const { mode, transition, back } = useVisualMode(
+    props.interview ? SHOW : EMPTY
+  );
+  const onSave = function() {
+    transition(SAVING);
+  };
+  const onCancel = function() {
+    back();
+  };
+
+  const onAdd = function() {
+    transition(CREATE);
+  };
+
+  const onEdit = function() {
+    transition(EDIT);
+  };
+
+  const onCompleteSave = function() {
+    transition(SAVING);
+  };
+  const onCompleteEmpty = function() {
+    transition(EMPTY);
+  };
+
+  const onConfirm = function() {
+    transition(DELETING);
+  };
+
+  const onDelete = function() {
+    transition(CONFIRM);
+  };
+
   return (
     <article className="appointment">
       <header class="appointment__time">
         <h4 class="text--semi-bold">{props.time}</h4>
         <hr class="appointment__separator" />
       </header>
-      {props.interview ? (
-        <Show
-          student={props.interview.student}
-          interviewer={props.interview.interviewer}
-          onEdit={props.onEdit}
-          onDelete={props.onDelete}
+      {mode === EDIT && (
+        <Form
+          name={props.interview.student}
+          // interviewers={[]}
+          interviewers={props.interviewers}
+          onSave={onSave}
+          onCancel={onCancel}
+          // onBook={props.bookInterview().then(() => transition(SHOW))}
         />
-      ) : (
-        <Empty />
+      )}
+      {mode === CONFIRM && (
+        <Confirm onCancel={onCancel} onConfirm={onConfirm} />
+      )}
+      {mode === SAVING && <Status message="Saving..." />}
+      {mode === DELETING && <Status message="Deleting..." />}
+      {mode === EMPTY && <Empty onAdd={onAdd} />}
+      {mode === SHOW && (
+        <Show
+          student={props.interview && props.interview.student}
+          interviewer={props.interview && props.interview.interviewer}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      )}
+      {mode === CREATE && (
+        <Form
+          // interviewers={props.interviewers}
+          interviewers={props.interviewers}
+          onSave={onSave}
+          onCancel={onCancel}
+        />
       )}
     </article>
   );

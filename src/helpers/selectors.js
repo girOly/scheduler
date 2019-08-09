@@ -1,21 +1,19 @@
 export function getAppointmentsForDay(state, day) {
   // Find the Right Day out of the [State]
   const days = state.days;
-  const output = [];
+  let appointments = [];
   for (let dayIndv of days) {
     if (dayIndv.name === day) {
-      output = dayIndv.appointment;
+      appointments = dayIndv.appointments;
     }
     // [1,2,3] etc
   }
   // Get Appointments out of the Day
-  return output.map(id => {
-    state.appointments[id];
-  });
+  return appointments.map(id => state.appointments[id]);
 }
 
 export function getInterview(state, interview) {
-  if (interview === null) {
+  if (!interview) {
     return null;
   }
 
@@ -30,4 +28,17 @@ export function getInterview(state, interview) {
     }
   };
   return interviewObject;
+}
+
+export function getInterviewersForDay(state, day) {
+  const days = state.days;
+  let interviewers = [];
+  for (let dayIndv of days) {
+    if (dayIndv.name === day) {
+      interviewers = dayIndv.interviewers;
+    }
+    // [1,2,3] etc
+  }
+  // Get Appointments out of the Day
+  return interviewers.map(id => state.interviewers[id]);
 }
