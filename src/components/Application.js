@@ -38,26 +38,24 @@ export default function Application(props) {
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
 
-  const schedule = appointments.map(appointment => {
-    const interviewCurrent = getInterview(state, appointment.interview);
-
-    console.log(interviewCurrent, "===============getInterview=============");
-    return (
-      <Appointment
-        key={appointment.id}
-        id={appointment.id}
-        time={appointment.time}
-        interview={interviewCurrent}
-        interviewers={interviewers}
-      />
-    );
-  });
+  // const schedule = appointments.map(appointment => {
+  //   const interviewCurrent = getInterview(state, appointment.interview);
+  //
+  //   console.log(interviewCurrent, "===============getInterview=============");
+  //   return (
+  //     <Appointment
+  //       key={appointment.id}
+  //       id={appointment.id}
+  //       time={appointment.time}
+  //       interview={interviewCurrent}
+  //       interviewers={interviewers}
+  //     />
+  //   );
+  // });
   // ______________________________
   // Pass SetDays(data)? -- Update Appointment Object using Helper Function?
 
   const bookInterview = function(id, interview) {
-    console.log(interview, "Interview! ___________________");
-    console.log("Booking Interview - Application.js");
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -66,12 +64,9 @@ export default function Application(props) {
       ...state.appointments,
       [id]: appointment
     };
-
-    console.log("Before exiting Function", id);
     return axios
       .put(`/api/appointments/${id}`, { interview })
       .then(() => {
-        console.log("Juste avant le Set State");
         setState(state => ({
           ...state,
           appointments
@@ -81,6 +76,27 @@ export default function Application(props) {
         console.log(err);
       });
     // transition to SHOW using onBook
+  };
+  const deleteInterview = id => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    return axios
+      .delete(`/api/appointments/${id}`)
+      .then(res => {
+        setState({
+          ...state,
+          appointments
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
@@ -96,16 +112,20 @@ export default function Application(props) {
         <DayList days={state.days} day={state.day} setDay={setDay} />;
       </section>
       <section className="schedule">
-        {appointments.map(appointment => (
-          <Appointment
-            id={appointment.id}
-            time={appointment.time}
-            interview={appointment.interview}
-            interviewers={interviewers}
-            bookInterview={bookInterview}
-          />
+        {appointments.map(appointment => {
+          const interviewCurrent = getInterview(state, appointment.interview);
+          return (
+            <Appointment
+              id={appointment.id}
+              time={appointment.time}
+              interview={interviewCurrent}
+              interviewers={interviewers}
+              bookInterview={bookInterview}
+              deleteInterview={deleteInterview}
+            />
+          );
           // <Appointment key={appointment.id} {...appointment} />
-        ))}
+        })}
         <Appointment />
       </section>
     </main>

@@ -12,6 +12,8 @@ import Status from "components/Appointment/status";
 import Form from "components/Appointment/form";
 
 export default function Appointment(props) {
+  const ERROR_DELETE = "ERROR_DELETE";
+  const ERROR_SAVE = "ERROR_SAVE";
   const EMPTY = "EMPTY";
   const SAVING = "SAVING";
   const DELETING = "DELETING";
@@ -51,20 +53,33 @@ export default function Appointment(props) {
   };
 
   const onConfirm = function() {
+    deleted(props.id);
     transition(DELETING);
   };
 
   const onDelete = function() {
     transition(CONFIRM);
   };
+  const deleted = function(id) {
+    props
+      .deleteInterview(id)
+      .then(() => {
+        transition(EMPTY);
+      })
+      .catch(error => transition(ERROR_DELETE, true));
+  };
   const save = function(name, interviewer) {
     const interview = {
       student: name,
       interviewer
     };
+
     transition(SAVING);
-    console.log(props.id, "ID____________________");
-    props.bookInterview(props.id, interview).then(() => transition(SHOW));
+
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch(error => transition(ERROR_SAVE, true));
   };
 
   return (
@@ -86,6 +101,7 @@ export default function Appointment(props) {
       {mode === CONFIRM && (
         <Confirm onCancel={onCancel} onConfirm={onConfirm} />
       )}
+
       {mode === SAVING && <Status message="Saving..." />}
       {mode === DELETING && <Status message="Deleting..." />}
       {mode === EMPTY && <Empty onAdd={onAdd} />}
@@ -105,6 +121,9 @@ export default function Appointment(props) {
           onCancel={onCancel}
         />
       )}
+      {mode === ERROR_SAVE && <Error message={"Error Saving"} />}
+
+      {mode === ERROR_DELETE && <Error message={"Error Deleting"} />}
     </article>
   );
 }
