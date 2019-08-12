@@ -15,11 +15,12 @@ export default function Application(props) {
     setDay,
     setDays,
     setInterviewers,
-    appointments,
-    interviewers,
     bookInterview,
     deleteInterview
   } = useApplicationData();
+
+  const appointments = getAppointmentsForDay(state, state.day);
+  const interviewers = getInterviewersForDay(state, state.day);
 
   return (
     <main className="layout">

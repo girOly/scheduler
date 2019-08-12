@@ -1,6 +1,7 @@
 export function getAppointmentsForDay(state, day) {
   // Find the Right Day out of the [State]
   const days = state.days;
+  console.log(days, "Days from selectors - helpers");
   let appointments = [];
   for (let dayIndv of days) {
     if (dayIndv.name === day) {
