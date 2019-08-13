@@ -152,7 +152,6 @@ storiesOf("Appointment", module)
         id={1}
         time="12pm"
         interview={{ student: "Lydia Miller-Jones", interviewer }}
-        // interviewer={interviewer}
       />
       <Appointment id="last" time="1pm" />
     </React.Fragment>
@@ -220,10 +219,6 @@ storiesOf("Form", module)
   })
   .add("Form Edit", () => (
     <Form
-      // name="Use State?"
-      // interviewer="Track Number State?"
-      // setName={action("setName")}
-      // setInterviewer={action("setInterviewer")}
       name="Frodo Baggins"
       interviewers={interviewers}
       interview={2}

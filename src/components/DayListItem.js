@@ -8,6 +8,7 @@ export default function DayListItem(props) {
   const oneSpot = props.spots === 1 ? "1 spot remaining" : null;
   const manySpots = props.spots ? `${props.spots} spots remaining` : null;
 
+  console.log(props.setDay);
   const dayListItemClass = classnames("day-list__item", {
     "day-list__item": true,
     "day-list__item--selected": props.selected,
@@ -15,7 +16,13 @@ export default function DayListItem(props) {
   });
 
   return (
-    <li className={dayListItemClass} onClick={() => props.setDay(props.name)}>
+    <li
+      className={dayListItemClass}
+      onClick={() => {
+        props.setDay({ type: "SET_DAY", day: props.name });
+        // props.setDay();
+      }}
+    >
       <h2>{props.name}</h2>
       <h4> {noSpot || oneSpot || manySpots} </h4>
     </li>

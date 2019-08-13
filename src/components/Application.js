@@ -9,18 +9,20 @@ import {
 } from "helpers/selectors";
 import useApplicationData from "hooks/useApplicationData";
 export default function Application(props) {
-  // const [days, setDays] = useState();
   const {
     state,
     setDay,
+    dispatch,
     setDays,
     setInterviewers,
     bookInterview,
-    deleteInterview
+    deleteInterview,
+    SpotsRemaining
   } = useApplicationData();
 
   const appointments = getAppointmentsForDay(state, state.day);
   const interviewers = getInterviewersForDay(state, state.day);
+  console.log(SpotsRemaining, "===================app=============");
 
   return (
     <main className="layout">
@@ -32,7 +34,7 @@ export default function Application(props) {
             alt="Interview Scheduler"
           />
         }
-        <DayList days={state.days} day={state.day} setDay={setDay} />;
+        <DayList days={state.days} day={state.day} setDay={dispatch} />;
       </section>
       <section className="schedule">
         {appointments.map(appointment => {
@@ -47,7 +49,6 @@ export default function Application(props) {
               deleteInterview={deleteInterview}
             />
           );
-          // <Appointment key={appointment.id} {...appointment} />
         })}
         <Appointment />
       </section>

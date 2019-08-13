@@ -25,11 +25,6 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-  console.log("========== prpos in APOINTMENT ========");
-  console.log(props);
-  console.log("==============================");
-
-  console.log(props.interview, " <<<<<<< Props.interview in Index.js");
   const onSave = function() {
     transition(SAVING);
   };
@@ -84,18 +79,16 @@ export default function Appointment(props) {
 
   return (
     <article className="appointment">
-      <header class="appointment__time">
-        <h4 class="text--semi-bold">{props.time}</h4>
-        <hr class="appointment__separator" />
+      <header className="appointment__time">
+        <h4 className="text--semi-bold">{props.time}</h4>
+        <hr className="appointment__separator" />
       </header>
       {mode === EDIT && (
         <Form
           name={props.interview.student}
-          // interviewers={[]}
           interviewers={props.interviewers}
           onSave={save}
           onCancel={onCancel}
-          // onBook={props.bookInterview().then(() => transition(SHOW))}
         />
       )}
       {mode === CONFIRM && (
@@ -108,7 +101,7 @@ export default function Appointment(props) {
       {mode === SHOW && (
         <Show
           student={props.interview && props.interview.student}
-          interviewer={props.interview.interviewer}
+          interviewer={props.interview && props.interview.interviewer}
           onEdit={onEdit}
           onDelete={onDelete}
         />

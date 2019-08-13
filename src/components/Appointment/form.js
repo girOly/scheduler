@@ -7,9 +7,20 @@ import Application from "components/Application";
 import "./styles.scss";
 
 export default function Form(props) {
+  const [error, setError] = useState("");
   const [name, setName] = useState(props.name || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-  console.log(props.interviewer, "Check y les Interviewers dans Form");
+  const validate = function() {
+    if (name === "") {
+      setError("Student name cannot be blank");
+      return;
+    }
+    if (interviewer === null) {
+      setError("Interviewer cannot be blank");
+      return;
+    }
+    props.onSave(name, interviewer);
+  };
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
@@ -20,13 +31,14 @@ export default function Form(props) {
             className="appointment__create-input text--semi-bold"
             type="text"
             placeholder="Enter Student Name"
+            data-testid="student-name-input"
           />
+          <section className="appointment__validation">{error}</section>
         </form>
         <InterviewerList
           interviewers={props.interviewers}
           value={interviewer}
           onChange={setInterviewer}
-          // save={save}
         />
       </section>
       <section className="appointment__card-right">
@@ -34,7 +46,7 @@ export default function Form(props) {
           <Button danger onClick={props.onCancel}>
             Cancel
           </Button>
-          <Button confirm onClick={() => props.onSave(name, interviewer)}>
+          <Button confirm onClick={validate}>
             Save
           </Button>
         </section>
