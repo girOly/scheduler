@@ -6,38 +6,11 @@ import {
   getInterviewersForDay
 } from "helpers/selectors";
 
+import reducer from "reducers/application";
+
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
-
-const reducer = function(state, action) {
-  switch (action.type) {
-    case SET_DAY:
-      return { ...state, day: action.day };
-    case SET_APPLICATION_DATA:
-      return {
-        ...state,
-        interviewers: action.interviewers,
-        appointments: action.appointments,
-        days: action.days
-      };
-    case SET_INTERVIEW: {
-      const appointment = {
-        ...state.appointments[action.id],
-        interview: (action.interview && { ...action.interview }) || null
-      };
-      const appointments = {
-        ...state.appointments,
-        [action.id]: appointment
-      };
-      return { ...state, appointments };
-    }
-    default:
-      throw new Error(
-        `Tried to reduce with unsupported action type: ${action.type}`
-      );
-  }
-};
 
 export default function useApplicationData(props) {
   const [state, dispatch] = useReducer(reducer, {
@@ -49,9 +22,9 @@ export default function useApplicationData(props) {
   });
   useEffect(() => {
     Promise.all([
-      axios.get("/api/days"),
-      axios.get("/api/appointments"),
-      axios.get("/api/interviewers")
+      axios.get("http://localhost:3001/api/days"),
+      axios.get("http://localhost:3001/api/appointments"),
+      axios.get("http://localhost:3001/api/interviewers")
     ]).then(result => {
       dispatch({
         type: SET_APPLICATION_DATA,

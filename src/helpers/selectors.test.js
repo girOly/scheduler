@@ -1,4 +1,8 @@
-import { getInterview, getAppointmentsForDay, getInterviewersForDay } from "helpers/selectors";
+import {
+  getInterview,
+  getAppointmentsForDay,
+  getInterviewersForDay
+} from "helpers/selectors";
 
 const state = {
   days: [
@@ -28,19 +32,18 @@ const state = {
       interview: { student: "Chad Takahashi", interviewer: 2 }
     }
   },
-  interviewers:{
-    "1":{
+  interviewers: {
+    "1": {
       id: 1,
       name: "Sylvia Palmer",
       avatar: "https://i.imgur.com/LpaY82x.png"
     },
-    "2":{
+    "2": {
       id: 1,
       name: "Sylviananannaa Palmer",
       avatar: "https://i.imgur.com/LpaY82x.png"
     }
   }
-
 };
 
 test("getAppointmentsForDay returns an array", () => {
@@ -84,12 +87,6 @@ test("getInterview returns an object with the interviewer data", () => {
     })
   );
 });
-
-test("getInterview returns null if no interview is booked", () => {
-  const result = getInterview(state, state.appointments["2"].interview);
-  expect(result).toBeNull();
-});
-
 
 //
 // test("getInterviewersForDay returns an array", () => {
