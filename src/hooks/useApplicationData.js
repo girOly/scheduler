@@ -20,6 +20,7 @@ export default function useApplicationData(props) {
     interviewers: []
     // spots: 3
   });
+
   useEffect(() => {
     Promise.all([
       axios.get("http://localhost:3001/api/days"),

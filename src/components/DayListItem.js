@@ -8,7 +8,6 @@ export default function DayListItem(props) {
   const oneSpot = props.spots === 1 ? "1 spot remaining" : null;
   const manySpots = props.spots ? `${props.spots} spots remaining` : null;
 
-  console.log(props.setDay);
   const dayListItemClass = classnames("day-list__item", {
     "day-list__item": true,
     "day-list__item--selected": props.selected,

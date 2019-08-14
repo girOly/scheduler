@@ -25,9 +25,9 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-  const onSave = function() {
-    transition(SAVING);
-  };
+  // const onSave = function() {
+  //   transition(SAVING);
+  // };
   const onCancel = function() {
     back();
   };

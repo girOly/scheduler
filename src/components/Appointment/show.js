@@ -3,7 +3,6 @@ import React from "react";
 import "./styles.scss";
 
 export default function Show(props) {
-  console.log(props.interviewer, "SHOW COMPONENT ------ INTERVIEWER");
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
