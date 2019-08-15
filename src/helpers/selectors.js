@@ -1,3 +1,4 @@
+// Selector Functions
 export function getAppointmentsForDay(state, day) {
   // Find the Right Day out of the [State]
   const days = state.days;

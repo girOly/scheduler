@@ -2,7 +2,7 @@ import React from "react";
 
 import "components/DayListItem.scss";
 import classnames from "classnames";
-
+// Creates the Days on Sidebar
 export default function DayListItem(props) {
   const noSpot = props.spots === 0 ? "no spots remaining" : null;
   const oneSpot = props.spots === 1 ? "1 spot remaining" : null;
@@ -20,7 +20,6 @@ export default function DayListItem(props) {
       className={dayListItemClass}
       onClick={() => {
         props.setDay({ type: "SET_DAY", day: props.name });
-        // props.setDay();
       }}
     >
       <h2>{props.name}</h2>

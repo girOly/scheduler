@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./interviewerList.scss";
 import InterviewerListItem from "./InterviewerListItem";
-
+// Creates the Interviewer List on Create
 export default function InterviewerList(props) {
   InterviewerList.propTypes = {
     value: PropTypes.number,
@@ -11,6 +11,7 @@ export default function InterviewerList(props) {
   const { interviewers } = props;
   const interviewerList = interviewers.map(mentor => (
     <InterviewerListItem
+      key={mentor.id}
       selected={props.value === mentor.id}
       setInterviewer={event => props.onChange(mentor.id)}
       name={mentor.name}
@@ -19,9 +20,9 @@ export default function InterviewerList(props) {
   ));
 
   return (
-    <section class="interviewers">
-      <h4 class="interviewers__header text--light">{props.name}</h4>
-      <ul class="interviewers__list"> {interviewerList} </ul>
+    <section className="interviewers">
+      <h4 className="interviewers__header text--light">{props.name}</h4>
+      <ul className="interviewers__list"> {interviewerList} </ul>
     </section>
   );
 }

@@ -1,5 +1,9 @@
 # Interview Scheduler
 
+## Summary
+
+React scheduler with up to five appointments per day. The information will be synced over multiple clients with the help of Web Sockets.
+
 ## Setup
 
 Install dependencies with `npm install`.
@@ -20,4 +24,8 @@ npm test
 
 ```sh
 npm run storybook
+
+
+
+
 ```

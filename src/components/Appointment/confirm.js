@@ -4,14 +4,14 @@ import { storiesOf } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import Button from "components/Button";
 import "./styles.scss";
-
+// Confirm Appointment component
 export default function Confirm(props) {
   return (
-    <main class="appointment__card appointment__card--confirm">
-      <h1 class="text--semi-bold">
+    <main className="appointment__card appointment__card--confirm">
+      <h1 className="text--semi-bold">
         Are you sure you want to cancel your Interview?
       </h1>
-      <section class="appointment__actions">
+      <section className="appointment__actions">
         <Button danger onClick={props.onCancel}>
           Cancel
         </Button>

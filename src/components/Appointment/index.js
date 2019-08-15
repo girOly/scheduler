@@ -10,7 +10,7 @@ import Error from "components/Appointment/error";
 import Header from "components/Appointment/header";
 import Status from "components/Appointment/status";
 import Form from "components/Appointment/form";
-
+// Creates the Appointment app
 export default function Appointment(props) {
   const ERROR_DELETE = "ERROR_DELETE";
   const ERROR_SAVE = "ERROR_SAVE";
@@ -24,10 +24,7 @@ export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
-
-  // const onSave = function() {
-  //   transition(SAVING);
-  // };
+  // transition between states
   const onCancel = function() {
     back();
   };
@@ -38,13 +35,6 @@ export default function Appointment(props) {
 
   const onEdit = function() {
     transition(EDIT);
-  };
-
-  const onCompleteSave = function() {
-    transition(SAVING);
-  };
-  const onCompleteEmpty = function() {
-    transition(EMPTY);
   };
 
   const onConfirm = function() {
@@ -63,20 +53,19 @@ export default function Appointment(props) {
       })
       .catch(error => transition(ERROR_DELETE, true));
   };
-  const save = function(name, interviewer) {
+  const onSave = function(name, interviewer) {
+    transition(SAVING);
     const interview = {
       student: name,
       interviewer
     };
-
-    transition(SAVING);
 
     props
       .bookInterview(props.id, interview)
       .then(() => transition(SHOW))
       .catch(error => transition(ERROR_SAVE, true));
   };
-
+  // _________________________________________________
   return (
     <article className="appointment">
       <header className="appointment__time">
@@ -87,7 +76,7 @@ export default function Appointment(props) {
         <Form
           name={props.interview.student}
           interviewers={props.interviewers}
-          onSave={save}
+          onSave={onSave}
           onCancel={onCancel}
         />
       )}
@@ -108,9 +97,8 @@ export default function Appointment(props) {
       )}
       {mode === CREATE && (
         <Form
-          // interviewers={props.interviewers}
           interviewers={props.interviewers}
-          onSave={save}
+          onSave={onSave}
           onCancel={onCancel}
         />
       )}

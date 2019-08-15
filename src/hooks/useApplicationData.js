@@ -1,24 +1,18 @@
-import React, { useReducer, useEffect } from "react";
+import react, { useReducer, useEffect } from "react";
 import axios from "axios";
-import {
-  getInterview,
-  getAppointmentsForDay,
-  getInterviewersForDay
-} from "helpers/selectors";
 
 import reducer from "reducers/application";
 
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
-
+// Application Hooks
 export default function useApplicationData(props) {
   const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: []
-    // spots: 3
   });
 
   useEffect(() => {
@@ -37,7 +31,6 @@ export default function useApplicationData(props) {
   }, []);
 
   const SpotsRemaining = function() {
-    // dispatch(spots);
     Promise.all([
       axios.get("/api/days"),
       axios.get("/api/appointments"),

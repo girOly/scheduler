@@ -2,7 +2,7 @@ import React from "react";
 
 import "./interviewerListItem.scss";
 import classnames from "classnames";
-
+// Creates Interviewers List - On Create Interview
 export default function InterviewerListItem(props) {
   const noName = props.selected ? props.name : null;
 
@@ -17,7 +17,7 @@ export default function InterviewerListItem(props) {
   });
 
   return (
-    <li class={interviewerListItemClass} onClick={props.setInterviewer}>
+    <li className={interviewerListItemClass} onClick={props.setInterviewer}>
       <img
         className={interviewerListImageClass}
         src={props.avatar}

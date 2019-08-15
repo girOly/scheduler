@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+// transition hooks
 export default function useVisualMode(value) {
   const [mode, setMode] = useState(value);
   const [history, setHistory] = useState([]);
@@ -9,7 +9,6 @@ export default function useVisualMode(value) {
       setHistory(prev => [...prev, mode]);
     }
     setMode(value);
-    console.log(history, "====================History==============");
   };
 
   const back = function() {

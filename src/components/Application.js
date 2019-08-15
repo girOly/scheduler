@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import DayList from "./DayList";
 import Appointment from "components/Appointment/index";
 import "components/Application.scss";
@@ -11,13 +11,9 @@ import useApplicationData from "hooks/useApplicationData";
 export default function Application(props) {
   const {
     state,
-    setDay,
     dispatch,
-    setDays,
-    setInterviewers,
     bookInterview,
-    deleteInterview,
-    SpotsRemaining
+    deleteInterview
   } = useApplicationData();
 
   const appointments = getAppointmentsForDay(state, state.day);
@@ -40,6 +36,7 @@ export default function Application(props) {
           const interviewCurrent = getInterview(state, appointment.interview);
           return (
             <Appointment
+              key={appointment.id}
               id={appointment.id}
               time={appointment.time}
               interview={interviewCurrent}
