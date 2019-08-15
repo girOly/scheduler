@@ -2,7 +2,7 @@
 
 ## Summary
 
-Scheduler web app built on React, Track up two 5 interviews daily using an API Database.
+Scheduler web app built on React, Track up to 5 interviews daily using an API Database.
 
 ## Home Page
 
