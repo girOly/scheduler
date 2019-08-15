@@ -2,7 +2,11 @@
 
 ## Summary
 
-React scheduler with up to five appointments per day. The information will be synced over multiple clients with the help of Web Sockets.
+Scheduler web app built on React, Track up two 5 interviews daily using an API Database.
+
+## Home Page
+
+![alt text](https://github.com/girOly/scheduler/blob/master/docs/homepage.png?raw=true)
 
 ## Setup
 
